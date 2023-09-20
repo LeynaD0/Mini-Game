@@ -15,6 +15,9 @@ public class Reloj : MonoBehaviour
     float speed_reloj;
     float minutos;
 
+    [SerializeField]
+    GameObject hour_hand, minutes_hand;
+
     int horas;
     int hour;
     int minutes;
@@ -31,7 +34,9 @@ public class Reloj : MonoBehaviour
 
         hora.text = hour.ToString() + ":" + minutes.ToString("00");
 
-        
+        hour_hand.transform.eulerAngles = new Vector3(0, 0, -(hour * 30) -(minutes/2) - 180);
+        minutes_hand.transform.eulerAngles = new Vector3(0, 0, -(minutes*6)-180);
+
 
         Debug.Log("Son las: " + hour + " y " + minutes);
 
@@ -51,6 +56,11 @@ public class Reloj : MonoBehaviour
         }
 
         reloj_Texto.text = horas.ToString() + ":" + minutos.ToString("00");
+
+        if(horas == hour && minutos == minutes)
+        {
+            Debug.Log("You win");
+        }
     }
 
     void SumarHoras()
