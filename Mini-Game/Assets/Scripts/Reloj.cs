@@ -14,13 +14,17 @@ public class Reloj : MonoBehaviour
     [SerializeField]
     float speed_reloj;
     float minutos;
+    [SerializeField]
+    float contraReloj;
 
     [SerializeField]
     GameObject hour_hand, minutes_hand;
 
-    int horas;
+    float horas;
     int hour;
     int minutes;
+
+    bool jugando;
      
     void Start()
     {
@@ -34,25 +38,31 @@ public class Reloj : MonoBehaviour
 
         hora.text = hour.ToString() + ":" + minutes.ToString("00");
 
-        hour_hand.transform.eulerAngles = new Vector3(0, 0, -(hour * 30) -(minutes/2) - 180);
-        minutes_hand.transform.eulerAngles = new Vector3(0, 0, -(minutes*6)-180);
-
-
         Debug.Log("Son las: " + hour + " y " + minutes);
 
         Debug.Log(horas + ":" + minutos);
+
+        jugando = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        SumarHoras();
+        if(jugando == true)
+        {
+            SumarHoras();
 
-        RestarHoras();
+            RestarHoras();
+        }
 
         if(horas > 12)
         {
             horas = 1;
+        }
+
+        else if (horas < 1)
+        {
+            horas = 12;
         }
 
         reloj_Texto.text = horas.ToString() + ":" + minutos.ToString("00");
@@ -60,14 +70,18 @@ public class Reloj : MonoBehaviour
         if(horas == hour && minutos == minutes)
         {
             Debug.Log("You win");
+            Comprobacion();
+            jugando = false;
         }
+
+        //Debug.Log(horas + " " + minutos);
     }
 
     void SumarHoras()
     {
         if (Input.GetKey(KeyCode.E))
         {
-            minutos += Time.deltaTime * speed_reloj;
+            minutos += speed_reloj;
             //Debug.Log("ha sido presionado");
 
             if (minutos > 59)
@@ -88,7 +102,7 @@ public class Reloj : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            minutos -= Time.deltaTime * speed_reloj;
+            minutos -= speed_reloj;
             //Debug.Log("ha sido presionado");
 
             if (minutos > 59)
@@ -97,11 +111,21 @@ public class Reloj : MonoBehaviour
                 horas++;
             }
 
+
             if (minutos < 0)
             {
                 minutos = 59;
                 horas--;
             }
+        }
+    }
+
+    void Comprobacion()
+    {
+        if(horas == hour && minutos == minutes)
+        {
+            horas = hour;
+            minutos = minutes;
         }
     }
 }
