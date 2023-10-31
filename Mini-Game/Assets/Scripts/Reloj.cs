@@ -10,28 +10,37 @@ public class Reloj : MonoBehaviour
     public TextMeshProUGUI hora;
     [SerializeField]
     public TextMeshProUGUI reloj_Texto;
+    [SerializeField]
+    TextMeshProUGUI contrareloj_Texto;
 
     [SerializeField]
     float speed_reloj;
     float minutos;
     [SerializeField]
     float contraReloj;
-
     [SerializeField]
-    GameObject hour_hand, minutes_hand;
+    float timeSpeed;
 
     float horas;
     int hour;
     int minutes;
+    int morning_afternoon;
 
     bool jugando;
+    [SerializeField]
+    bool am, pm;
      
     void Start()
     {
         //Al empezar el juego, este dara un tiempo aletorio para definir la hora que tenemos que poner
         horas = Random.Range(1, 12);
         minutos = Random.Range(0, 59);
+        morning_afternoon = Random.Range(0, 1);
+
+        Debug.Log(morning_afternoon);
+
         reloj_Texto.text = horas.ToString() + ":" + minutos.ToString("00");
+        contrareloj_Texto.text = contraReloj.ToString();
 
         hour = Random.Range(1, 12);
         minutes = Random.Range(1, 59);
@@ -53,11 +62,18 @@ public class Reloj : MonoBehaviour
             SumarHoras();
 
             RestarHoras();
+
+            Contrareloj();
         }
 
         if(horas > 12)
         {
             horas = 1;
+
+            if(morning_afternoon < 0)
+            {
+
+            }
         }
 
         else if (horas < 1)
@@ -67,7 +83,21 @@ public class Reloj : MonoBehaviour
 
         reloj_Texto.text = horas.ToString() + ":" + minutos.ToString("00");
 
-        if(horas == hour && minutos == minutes)
+        contrareloj_Texto.text = contraReloj.ToString("0");
+
+        if (morning_afternoon <= 0)
+        {
+            am = true;
+            pm = false;
+        }
+
+        else
+        {
+            am = false;
+            pm = true;
+        }
+
+        if (horas == hour && minutos == minutes)
         {
             Debug.Log("You win");
             Comprobacion();
@@ -126,6 +156,17 @@ public class Reloj : MonoBehaviour
         {
             horas = hour;
             minutos = minutes;
+        }
+    }
+
+    void Contrareloj()
+    {
+        contraReloj -= Time.deltaTime * timeSpeed;
+
+        if(contraReloj < 0)
+        {
+            jugando = false;
+            contraReloj = 0;
         }
     }
 }
