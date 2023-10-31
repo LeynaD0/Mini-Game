@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEditor.Timeline;
+using Palmmedia.ReportGenerator.Core.Reporting.Builders;
+using UnityEngine.UI;
 
 public class Reloj : MonoBehaviour
 {
     [SerializeField]
-    public TextMeshProUGUI hora;
+    public TextMeshProUGUI hora_Texto;
     [SerializeField]
     public TextMeshProUGUI reloj_Texto;
     [SerializeField]
     TextMeshProUGUI contrareloj_Texto;
+    [SerializeField]
+    private Slider contraRelojSlider;
 
     [SerializeField]
     float speed_reloj;
@@ -25,6 +29,7 @@ public class Reloj : MonoBehaviour
     int hour;
     int minutes;
     int morning_afternoon;
+    int am_pm;
 
     bool jugando;
     [SerializeField]
@@ -35,21 +40,40 @@ public class Reloj : MonoBehaviour
         //Al empezar el juego, este dara un tiempo aletorio para definir la hora que tenemos que poner
         horas = Random.Range(1, 12);
         minutos = Random.Range(0, 59);
-        morning_afternoon = Random.Range(0, 1);
 
-        Debug.Log(morning_afternoon);
+        //morning_afternoon = Random.Range(1, 2);
 
-        reloj_Texto.text = horas.ToString() + ":" + minutos.ToString("00");
+        morning_afternoon = (Random.Range(0, 2) == 0) ? 1 : 2;
+
+
+        if (Random.Range(0, 2) == 0)
+        {
+            am_pm = 1; // "am"
+        }
+        else
+        {
+            am_pm = 2; // "pm"
+        }
+
         contrareloj_Texto.text = contraReloj.ToString();
 
         hour = Random.Range(1, 12);
         minutes = Random.Range(1, 59);
 
-        hora.text = hour.ToString() + ":" + minutes.ToString("00");
+        AmOPmDespertardor();
 
-        Debug.Log("Son las: " + hour + " y " + minutes);
+        if (morning_afternoon <= 1)
+        {
+            hora_Texto.text = hour.ToString() + ":" + minutes.ToString("00") + " am";
+            //Debug.Log("Son las " + hour.ToString() + ":" + minutes.ToString("00") + " am");
+        }
+        else if (morning_afternoon > 1)
+        {
+            hora_Texto.text = hour.ToString() + ":" + minutes.ToString("00") + " pm";
+            //Debug.Log("Son las " + hour.ToString() + ":" + minutes.ToString("00") + " pm");
+        }
 
-        Debug.Log(horas + ":" + minutos);
+        //Debug.Log(horas + ":" + minutos);
 
         jugando = true;
     }
@@ -69,11 +93,6 @@ public class Reloj : MonoBehaviour
         if(horas > 12)
         {
             horas = 1;
-
-            if(morning_afternoon < 0)
-            {
-
-            }
         }
 
         else if (horas < 1)
@@ -81,11 +100,9 @@ public class Reloj : MonoBehaviour
             horas = 12;
         }
 
-        reloj_Texto.text = horas.ToString() + ":" + minutos.ToString("00");
-
         contrareloj_Texto.text = contraReloj.ToString("0");
 
-        if (morning_afternoon <= 0)
+        if (morning_afternoon <= 1)
         {
             am = true;
             pm = false;
@@ -97,12 +114,14 @@ public class Reloj : MonoBehaviour
             pm = true;
         }
 
-        if (horas == hour && minutos == minutes)
+        if (horas == hour && minutos == minutes && morning_afternoon == am_pm)
         {
             Debug.Log("You win");
             Comprobacion();
             jugando = false;
         }
+
+        AmOPmDespertardor();
 
         //Debug.Log(horas + " " + minutos);
     }
@@ -118,12 +137,12 @@ public class Reloj : MonoBehaviour
             {
                 minutos = 0;
                 horas++;
-            }
 
-            if (minutos < 0)
-            {
-                minutos = 59;
-                horas--;
+                if (horas > 12)
+                {
+                    horas = 1;
+                    CambioDeHora();
+                }
             }
         }
     }
@@ -133,29 +152,28 @@ public class Reloj : MonoBehaviour
         if (Input.GetKey(KeyCode.Q))
         {
             minutos -= speed_reloj;
-            //Debug.Log("ha sido presionado");
-
-            if (minutos > 59)
-            {
-                minutos = 0;
-                horas++;
-            }
-
 
             if (minutos < 0)
             {
                 minutos = 59;
                 horas--;
+
+                if (horas < 1)
+                {
+                    horas = 12;
+                    CambioDeHora();
+                }
             }
         }
     }
 
     void Comprobacion()
     {
-        if(horas == hour && minutos == minutes)
+        if(horas == hour && minutos == minutes && morning_afternoon == am_pm)
         {
             horas = hour;
             minutos = minutes;
+            am_pm = morning_afternoon;
         }
     }
 
@@ -167,6 +185,34 @@ public class Reloj : MonoBehaviour
         {
             jugando = false;
             contraReloj = 0;
+        }
+
+        contraRelojSlider.value = contraReloj;
+    }
+
+    void AmOPmDespertardor()
+    {
+        if (am_pm <= 1)
+        {
+            reloj_Texto.text = horas.ToString() + ":" + minutos.ToString("00") + " am";
+        }
+
+        else
+        {
+            reloj_Texto.text = horas.ToString() + ":" + minutos.ToString("00") + " pm";
+        }
+    }
+
+    void CambioDeHora()
+    {
+        if (am_pm == 1)
+        {
+            am_pm = 2;
+        }
+
+        else
+        {
+            am_pm = 1;
         }
     }
 }
