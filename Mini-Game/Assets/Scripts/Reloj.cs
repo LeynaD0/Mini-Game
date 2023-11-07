@@ -16,6 +16,8 @@ public class Reloj : MonoBehaviour
     TextMeshProUGUI contrareloj_Texto;
     [SerializeField]
     private Slider contraRelojSlider;
+    [SerializeField]
+    Animator animador;
 
     [SerializeField]
     float speed_reloj;
@@ -118,6 +120,7 @@ public class Reloj : MonoBehaviour
         {
             Debug.Log("You win");
             Comprobacion();
+            animador.SetTrigger("Despierto");
             jugando = false;
         }
 
