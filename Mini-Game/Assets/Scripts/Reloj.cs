@@ -118,10 +118,12 @@ public class Reloj : MonoBehaviour
 
         if (horas == hour && minutos == minutes && morning_afternoon == am_pm)
         {
-            Debug.Log("You win");
-            Comprobacion();
-            animador.SetTrigger("Despierto");
             jugando = false;
+            animador.SetTrigger("Despierto");
+            horas = hour;
+            minutos = minutes;
+            am_pm = morning_afternoon;
+            //Debug.Log("You win");
         }
 
         AmOPmDespertardor();
@@ -167,16 +169,6 @@ public class Reloj : MonoBehaviour
                     CambioDeHora();
                 }
             }
-        }
-    }
-
-    void Comprobacion()
-    {
-        if(horas == hour && minutos == minutes && morning_afternoon == am_pm)
-        {
-            horas = hour;
-            minutos = minutes;
-            am_pm = morning_afternoon;
         }
     }
 
