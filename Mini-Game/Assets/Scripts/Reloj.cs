@@ -13,8 +13,6 @@ public class Reloj : MonoBehaviour
     [SerializeField]
     public TextMeshProUGUI reloj_Texto;
     [SerializeField]
-    TextMeshProUGUI contrareloj_Texto;
-    [SerializeField]
     private Slider contraRelojSlider;
     [SerializeField]
     Animator animador;
@@ -57,7 +55,6 @@ public class Reloj : MonoBehaviour
             am_pm = 2; // "pm"
         }
 
-        contrareloj_Texto.text = contraReloj.ToString();
 
         hour = Random.Range(1, 12);
         minutes = Random.Range(1, 59);
@@ -66,12 +63,12 @@ public class Reloj : MonoBehaviour
 
         if (morning_afternoon <= 1)
         {
-            hora_Texto.text = hour.ToString() + ":" + minutes.ToString("00") + " am";
+            hora_Texto.text = "Me tengo que despertar a las: " + hour.ToString() + ":" + minutes.ToString("00") + " am";
             //Debug.Log("Son las " + hour.ToString() + ":" + minutes.ToString("00") + " am");
         }
         else if (morning_afternoon > 1)
         {
-            hora_Texto.text = hour.ToString() + ":" + minutes.ToString("00") + " pm";
+            hora_Texto.text = "Me tengo que despertar a las: " + hour.ToString() + ":" + minutes.ToString("00") + " pm";
             //Debug.Log("Son las " + hour.ToString() + ":" + minutes.ToString("00") + " pm");
         }
 
@@ -102,7 +99,6 @@ public class Reloj : MonoBehaviour
             horas = 12;
         }
 
-        contrareloj_Texto.text = contraReloj.ToString("0");
 
         if (morning_afternoon <= 1)
         {
