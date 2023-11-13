@@ -3564,6 +3564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1801360623}
   - component: {fileID: 1801360624}
+  - component: {fileID: 1801360625}
   m_Layer: 5
   m_Name: Fire
   m_TagString: Untagged
@@ -3587,8 +3588,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5.149994, y: 3.6}
-  m_SizeDelta: {x: 1, y: -4.4799976}
+  m_AnchoredPosition: {x: 5.4400024, y: 4.384999}
+  m_SizeDelta: {x: 1, y: -2.9099975}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1801360624
 SpriteRenderer:
@@ -3642,6 +3643,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1801360625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801360622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4762d1724d59a9247a415710380910f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: -800413031, guid: 67ca674653e33b848b8a11886119ea25, type: 3}
+  - {fileID: -849761217, guid: 67ca674653e33b848b8a11886119ea25, type: 3}
+  - {fileID: 342144663, guid: 67ca674653e33b848b8a11886119ea25, type: 3}
+  - {fileID: 360315707, guid: 67ca674653e33b848b8a11886119ea25, type: 3}
+  speed: 4
 --- !u!1 &1862410353
 GameObject:
   m_ObjectHideFlags: 0
