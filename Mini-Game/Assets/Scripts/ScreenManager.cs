@@ -6,28 +6,32 @@ using UnityEngine.UI;
 public class ScreenManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject buttomPlay, buttomOptions, buttomExit, screenMenu;
+    GameObject buttonPlay, buttonOptions, buttonExit, screenMenu, screenOptions;
+
 
     void Start()
     {
-        //LeanTween.moveLocalX(buttomPlay, 1233f, 0f);
-        //LeanTween.moveLocalX(buttomOptions, 1233f, 0f);
-        //LeanTween.moveLocalX(buttomExit, 1233f, 0f);
+        ScreenMenu();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(screenMenu == true)
-        {
-            ScreenMenu();
-        }
+        
     }
 
     public void ScreenMenu()
     {  
-            LeanTween.moveLocalX(buttomPlay, 581f, 0.5f);
-            LeanTween.moveLocalX(buttomOptions, 581f, 0.8f);
-            LeanTween.moveLocalX(buttomExit, 581f, 1.2f);
+            LeanTween.moveLocalX(buttonPlay, 581f, 0.5f);
+            LeanTween.moveLocalX(buttonOptions, 581f, 0.8f);
+            LeanTween.moveLocalX(buttonExit, 581f, 1.2f);
+    }
+
+    public void ScreenOptions()
+    {
+        LeanTween.moveLocalX(buttonPlay, 1233f, 0.5f);
+        LeanTween.moveLocalX(buttonOptions, 1233f, 0.8f);
+        LeanTween.moveLocalX(buttonExit, 1233f, 1.2f).callOnCompletes();
+        LeanTween.scale(screenOptions, new Vector3(1f, 1f, 1f), 1.8f);
     }
 }
