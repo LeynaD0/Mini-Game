@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScreenManager : MonoBehaviour
 {
@@ -22,9 +23,10 @@ public class ScreenManager : MonoBehaviour
 
     public void ScreenMenu()
     {  
-            LeanTween.moveLocalX(buttonPlay, 581f, 0.5f);
-            LeanTween.moveLocalX(buttonOptions, 581f, 0.8f);
-            LeanTween.moveLocalX(buttonExit, 581f, 1.2f);
+        LeanTween.moveLocalX(buttonPlay, 581f, 0.5f);
+        LeanTween.moveLocalX(buttonOptions, 581f, 0.8f);
+        LeanTween.moveLocalX(buttonExit, 581f, 1.2f);
+        LeanTween.scale(screenOptions, new Vector3(0.01f, 0.01f, 0.01f), 1f);
     }
 
     public void ScreenOptions()
@@ -33,5 +35,10 @@ public class ScreenManager : MonoBehaviour
         LeanTween.moveLocalX(buttonOptions, 1233f, 0.8f);
         LeanTween.moveLocalX(buttonExit, 1233f, 1.2f).callOnCompletes();
         LeanTween.scale(screenOptions, new Vector3(1f, 1f, 1f), 1.8f);
+    }
+
+    public void PlayScreen()
+    {
+        SceneManager.LoadScene("Game");
     }
 }
