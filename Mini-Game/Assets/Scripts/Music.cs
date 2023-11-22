@@ -10,6 +10,8 @@ public class Music : MonoBehaviour
     TextMeshProUGUI percentage;
     [SerializeField]
     Slider music;
+    [SerializeField]
+    GameObject audio;
     // Start is called before the first frame update
     void Start()
     {
