@@ -9,18 +9,34 @@ public class Music : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI percentage;
     [SerializeField]
-    Slider music;
-    [SerializeField]
-    GameObject audio;
+    Slider musicSlider;
     // Start is called before the first frame update
     void Start()
     {
-        percentage.text = music.value.ToString("0") + "%";
+        LoadValue();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        percentage.text = music.value.ToString("0") + "%";
+        float volumeValue = musicSlider.value;
+    }
+
+    public void SliderVolume(float volume)
+    {
+        percentage.text = volume.ToString("0") + "%";
+    }
+
+    public void SaveVolumeButton()
+    {
+        float volumeValue = musicSlider.value;
+        PlayerPrefs.SetFloat("VolumeValue", volumeValue);
+        LoadValue();
+    }
+
+    void LoadValue()
+    {
+        float volumeValue = PlayerPrefs.GetFloat("VolumeValue");
+        musicSlider.value = volumeValue;
+        AudioListener.volume = volumeValue;
     }
 }
