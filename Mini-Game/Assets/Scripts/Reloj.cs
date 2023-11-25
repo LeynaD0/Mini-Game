@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor.Timeline;
 using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Reloj : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class Reloj : MonoBehaviour
      
     void Start()
     {
+
         //Al empezar el juego, este dara un tiempo aletorio para definir la hora que tenemos que poner
         horas = Random.Range(1, 12);
         minutos = Random.Range(0, 59);
@@ -80,7 +82,7 @@ public class Reloj : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(jugando == true)
+        if(jugando)
         {
             SumarHoras();
 
@@ -119,7 +121,9 @@ public class Reloj : MonoBehaviour
             horas = hour;
             minutos = minutes;
             am_pm = morning_afternoon;
-            //Debug.Log("You win");
+            Debug.Log("Ganaste");
+            Level.instance.WinLevel();
+            AudioController.instance.WinSound();
         }
 
         AmOPmDespertardor();

@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class ScreenManager : MonoBehaviour
 {
+    [SerializeField] private ScreenManager Instance;
+    public static ScreenManager instance { get; private set; }
+
     [SerializeField]
     GameObject buttonPlay, buttonOptions, buttonExit, screenMenu, screenOptions, screenControls;
     [SerializeField]
@@ -17,7 +20,18 @@ public class ScreenManager : MonoBehaviour
     [SerializeField]
     bool onPlay;
 
-
+    
+    private void Awake()
+    {
+        if(instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
     void Start()
     {
         ScreenMenu();
@@ -65,7 +79,8 @@ public class ScreenManager : MonoBehaviour
     public void PlayScreen()
     {
         onPlay = true;
-        LeanTween.move(screenControls, new Vector3(0f, 0f), 0.5f);  
+        LeanTween.moveX(screenControls, 0f, 0.5f);
+        
     }
 
     public void Exit()

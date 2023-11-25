@@ -10,7 +10,32 @@ public class Music : MonoBehaviour
     TextMeshProUGUI percentage;
     [SerializeField]
     Slider musicSlider;
-    // Start is called before the first frame update
+
+    private static Music _instance;
+
+    public static Music Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // Busca la instancia existente en la escena
+                _instance = FindObjectOfType<Music>();
+
+                // Si no existe, crea un nuevo objeto
+                if (_instance == null)
+                {
+                    GameObject singletonObject = new GameObject("Music");
+                    _instance = singletonObject.AddComponent<Music>();
+                }
+
+                // Marca el objeto para que no se destruya al cargar una nueva escena
+                DontDestroyOnLoad(_instance.gameObject);
+            }
+
+            return _instance;
+        }
+    }
     void Start()
     {
         LoadValue();
