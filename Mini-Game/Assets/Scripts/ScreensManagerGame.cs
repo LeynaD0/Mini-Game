@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,9 @@ public class ScreensManagerGame : MonoBehaviour
     [SerializeField] private GameObject gameManager;
     [SerializeField] private bool timer = true, reload;
     [SerializeField] private float time = 6f, timeReload = 4;
+    [SerializeField] public TextMeshProUGUI levelText;
+
+    int nivel;
 
     private void Awake()
     {
@@ -25,11 +29,21 @@ public class ScreensManagerGame : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        LeanTween.moveLocalX(screenLeft, -500f, 0f);
+        LeanTween.moveLocalX(screenRight, 500f, 0f);
+
+        nivel = Nivel.instance.nivelActual;
+        levelText.text = nivel.ToString();
+    }
+
     private void Update()
     {
         if (timer)
         {
             time -= Time.deltaTime;
+            levelText.text = nivel.ToString();
             ScreenTime();
         }
 
@@ -45,15 +59,15 @@ public class ScreensManagerGame : MonoBehaviour
 
     public void LevelView()
     {
-        LeanTween.moveX(screenLeft, -500f, 0.5f);
-        LeanTween.moveX(screenRight, 500f, 0.5f);
+        LeanTween.moveLocalX(screenLeft, -1460f, 0.5f);
+        LeanTween.moveLocalX(screenRight, 1460f, 0.5f);
         timer = false;
     }
 
     public void WinOrLose()
     {
-        LeanTween.moveX(screenLeft, 460f, 0.5f);
-        LeanTween.moveX(screenRight, -460f, 0.5f);
+        LeanTween.moveLocalX(screenLeft, -500f, 0.5f);
+        LeanTween.moveLocalX(screenRight, 500f, 0.5f);
         reload = true;
     }
 
@@ -66,6 +80,7 @@ public class ScreensManagerGame : MonoBehaviour
             gameManager.SetActive(true);
             LevelView();
             AudioController.instance.PlaySounds();
+            
         }
     }
 }

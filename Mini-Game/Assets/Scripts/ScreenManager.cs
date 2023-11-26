@@ -34,6 +34,7 @@ public class ScreenManager : MonoBehaviour
     }
     void Start()
     {
+        Time.timeScale = 1;
         ScreenMenu();
     }
 

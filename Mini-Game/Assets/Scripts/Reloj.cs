@@ -18,6 +18,9 @@ public class Reloj : MonoBehaviour
     [SerializeField]
     Animator animador;
 
+    [SerializeField]bool aVerSiSeArreglaEsto;
+
+
     [SerializeField]
     float speed_reloj;
     float minutos;
@@ -32,7 +35,7 @@ public class Reloj : MonoBehaviour
     int morning_afternoon;
     int am_pm;
 
-    bool jugando;
+    bool jugando, ganaste;
     [SerializeField]
     bool am, pm;
      
@@ -114,16 +117,11 @@ public class Reloj : MonoBehaviour
             pm = true;
         }
 
-        if (horas == hour && minutos == minutes && morning_afternoon == am_pm)
+        if (!ganaste && horas == hour && minutos == minutes && morning_afternoon == am_pm)
         {
+            ganaste = true;
             jugando = false;
-            animador.SetTrigger("Despierto");
-            horas = hour;
-            minutos = minutes;
-            am_pm = morning_afternoon;
-            Debug.Log("Ganaste");
-            Level.instance.WinLevel();
-            AudioController.instance.WinSound();
+            ArreglatePorFavor();
         }
 
         AmOPmDespertardor();
@@ -180,6 +178,8 @@ public class Reloj : MonoBehaviour
         {
             jugando = false;
             contraReloj = 0;
+            SceneManager.LoadScene("Menu");
+            Nivel.instance.ReiniciarNiveles();
         }
 
         contraRelojSlider.value = contraReloj;
@@ -209,5 +209,23 @@ public class Reloj : MonoBehaviour
         {
             am_pm = 1;
         }
+    }
+
+    public void ArreglatePorFavor()
+    {
+        Debug.Log("ArreglatePorFavor llamada");
+        if (ganaste)
+        {
+            animador.SetTrigger("Despierto");
+            horas = hour;
+            minutos = minutes;
+            am_pm = morning_afternoon;
+            Debug.Log("Ganaste");
+            Level.instance.WinLevel();
+            AudioController.instance.WinSound();
+            
+        }
+
+        ganaste = false;
     }
 }

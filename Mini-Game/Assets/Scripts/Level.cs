@@ -7,9 +7,11 @@ public class Level : MonoBehaviour
 {
     public static Level instance { get; private set; }
 
-    [SerializeField] bool levelComplete = false;
+    [SerializeField] bool levelComplete = false, timer;
 
     [SerializeField] float time;
+
+    [SerializeField] int speed;
 
     private void Awake()
     {
@@ -42,14 +44,22 @@ public class Level : MonoBehaviour
         {
             levelComplete = true;
             Nivel.instance.SumarNivel();
-            
+
         }
     }
 
-    void CargarSiguienteNivel()
+    public void CargarSiguienteNivel()
     {
-        levelComplete = false;
-        time = 3f;
-        ScreensManagerGame.instance.WinOrLose();
+        Debug.Log("Holi");
+        //levelComplete = true;
+        timer = true;
+        if (time <= 0)
+        {
+            time = 3f;
+            ScreensManagerGame.instance.WinOrLose();
+            Time.timeScale += 0.2f;
+        }
+        
+        
     }
 }

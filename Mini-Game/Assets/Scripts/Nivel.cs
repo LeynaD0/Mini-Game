@@ -6,7 +6,7 @@ public class Nivel : MonoBehaviour
 {
     public static Nivel instance { get; private set; }
 
-    [SerializeField] int nivelActual = 1;
+    public int nivelActual = 1;
 
     private void Awake()
     {
@@ -23,7 +23,9 @@ public class Nivel : MonoBehaviour
 
     public void SumarNivel()
     {
+        Debug.Log("holi");
         nivelActual++;
+        Level.instance.CargarSiguienteNivel();
     }
 
     public void ReiniciarNiveles()
